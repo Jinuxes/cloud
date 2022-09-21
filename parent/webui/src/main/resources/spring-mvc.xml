@@ -17,9 +17,32 @@
     <bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <!-- 配置异常映射 -->
         <property name="exceptionMappings">
-            <props>
-                <prop key="java.lang.Exception">error</prop>
-            </props>
+            <!-- <props> -->
+            <!--     <prop key="java.lang.Exception">error</prop> -->
+            <!-- </props> -->
+            <map>
+                <entry key="java.lang.Exception" value="error"></entry>
+            </map>
         </property>
+    </bean>
+
+    <!-- 配置文件上传拦截器，这个拦截器用来判断文件的大小是否超过限制 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.jinuxes.cloud.mvc.interceptor.FileUploadInterceptor">
+                <!-- 4G -->
+                <property name="maxSize" value="4294967296" />
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 文件上传解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="4500000000"/>
+        <!-- <property name="maxUploadSize" value="200"/> -->
+        <!--resolveLazily属性启用是为了推迟文件解析，以便捕获文件大小异常-->
+        <!-- <property name="resolveLazily" value="true"/> -->
     </bean>
 </beans>

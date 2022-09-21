@@ -1,15 +1,14 @@
 package com.jinuxes.cloud.mvc.config;
 
 import com.google.gson.Gson;
-import com.jinuxes.cloud.exception.AccountAlreadyUseException;
-import com.jinuxes.cloud.exception.AuthorityNameAlreadyExistException;
-import com.jinuxes.cloud.exception.RoleAlreadyExistException;
+import com.jinuxes.cloud.exception.*;
 import com.jinuxes.cloud.utils.CloudConstant;
 import com.jinuxes.cloud.utils.RequestType;
 import com.jinuxes.cloud.utils.ResultEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,16 +58,65 @@ public class ExceptionResolver {
         return resolve("error",exception,request,response);
     }
 
+    /**
+     * 创建目录时，父路径不存在异常
+     */
+    @ExceptionHandler(value= ParenPathDoesNotExistException.class)
+    public ModelAndView resolveParenPathDoesNotExistException(ParenPathDoesNotExistException exception,
+                                                                  HttpServletRequest request,
+                                                                  HttpServletResponse response) throws IOException {
+        return resolve("error",exception,request,response);
+    }
 
-    // /**
-    //  * 运行时异常处理，测试用
-    //  */
-    // @ExceptionHandler(RuntimeException.class)
-    // public ModelAndView resolveRuntimeException(RuntimeException exception,
-    //                                                  HttpServletRequest request,
-    //                                                  HttpServletResponse response) throws IOException {
-    //     return resolve("error",exception,request,response);
-    // }
+    /**
+     * 创建目录时，目录已存在异常
+     */
+    @ExceptionHandler(value= DirectoryAlreadyExistsException.class)
+    public ModelAndView resolveDirectoryAlreadyExistsException(DirectoryAlreadyExistsException exception,
+                                                              HttpServletRequest request,
+                                                              HttpServletResponse response) throws IOException {
+        return resolve("error",exception,request,response);
+    }
+
+    /**
+     * 目录层次结构太深异常，也就是File对象的path属性过长插入数据库时会导致超过数据库path字段设定的长度报的错误。
+     */
+    @ExceptionHandler(value= DirectoryHierarchyIsTooDeepException.class)
+    public ModelAndView resolveDirectoryHierarchyIsTooDeepException(DirectoryHierarchyIsTooDeepException exception,
+                                                               HttpServletRequest request,
+                                                               HttpServletResponse response) throws IOException {
+        return resolve("error",exception,request,response);
+    }
+
+    /**
+     * 文件已存在异常处理
+     */
+    @ExceptionHandler(value= FileAlreadyExistsException.class)
+    public ModelAndView resolveFileAlreadyExistsException(FileAlreadyExistsException exception,
+                                                                    HttpServletRequest request,
+                                                                    HttpServletResponse response) throws IOException {
+        return resolve("error",exception,request,response);
+    }
+
+    /**
+     * 文件上传大小超出最大范围异常处理
+     */
+    @ExceptionHandler(value= FileSizeExceedsMaxUploadLimitException.class)
+    public ModelAndView resolveFileSizeExceedsMaxUploadLimitException(FileSizeExceedsMaxUploadLimitException exception,
+                                                          HttpServletRequest request,
+                                                          HttpServletResponse response) throws IOException {
+        return resolve("error",exception,request,response);
+    }
+
+    /**
+     * 文件不存在异常
+     */
+    @ExceptionHandler(value= FileNotExistException.class)
+    public ModelAndView resolveFileNotExistException(FileNotExistException exception,
+                                                                      HttpServletRequest request,
+                                                                      HttpServletResponse response) throws IOException {
+        return resolve("error",exception,request,response);
+    }
 
     private ModelAndView resolve(String viewName,
                                  Exception exception,

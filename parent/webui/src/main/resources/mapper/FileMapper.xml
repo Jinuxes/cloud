@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinuxes.cloud.mapper.FileMapper" >
+  <resultMap id="BaseResultMap" type="com.jinuxes.cloud.entity.File" >
+    <id column="file_id" property="fileId" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="CHAR" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="modi_time" property="modiTime" jdbcType="CHAR" />
+    <result column="is_directory" property="isDirectory" jdbcType="BIT" />
+    <result column="share" property="share" jdbcType="BIT" />
+    <result column="trash" property="trash" jdbcType="BIT" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    file_id, name, size, owner, path, parent_id, create_time, modi_time, is_directory, 
+    share, trash, is_delete
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jinuxes.cloud.entity.FileExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_file
+    where file_id = #{fileId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_file
+    where file_id = #{fileId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jinuxes.cloud.entity.FileExample" >
+    delete from t_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jinuxes.cloud.entity.File" >
+    insert into t_file (file_id, name, size, 
+      owner, path, parent_id, 
+      create_time, modi_time, is_directory, 
+      share, trash, is_delete)
+    values (#{fileId,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{size,jdbcType=CHAR}, 
+      #{owner,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{parentId,jdbcType=CHAR}, 
+      #{createTime,jdbcType=CHAR}, #{modiTime,jdbcType=CHAR}, #{isDirectory,jdbcType=BIT}, 
+      #{share,jdbcType=BIT}, #{trash,jdbcType=BIT}, #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinuxes.cloud.entity.File" >
+    insert into t_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modiTime != null" >
+        modi_time,
+      </if>
+      <if test="isDirectory != null" >
+        is_directory,
+      </if>
+      <if test="share != null" >
+        share,
+      </if>
+      <if test="trash != null" >
+        trash,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileId != null" >
+        #{fileId,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=CHAR},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="modiTime != null" >
+        #{modiTime,jdbcType=CHAR},
+      </if>
+      <if test="isDirectory != null" >
+        #{isDirectory,jdbcType=BIT},
+      </if>
+      <if test="share != null" >
+        #{share,jdbcType=BIT},
+      </if>
+      <if test="trash != null" >
+        #{trash,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jinuxes.cloud.entity.FileExample" resultType="java.lang.Integer" >
+    select count(*) from t_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_file
+    <set >
+      <if test="record.fileId != null" >
+        file_id = #{record.fileId,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.size != null" >
+        size = #{record.size,jdbcType=CHAR},
+      </if>
+      <if test="record.owner != null" >
+        owner = #{record.owner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.path != null" >
+        path = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=CHAR},
+      </if>
+      <if test="record.modiTime != null" >
+        modi_time = #{record.modiTime,jdbcType=CHAR},
+      </if>
+      <if test="record.isDirectory != null" >
+        is_directory = #{record.isDirectory,jdbcType=BIT},
+      </if>
+      <if test="record.share != null" >
+        share = #{record.share,jdbcType=BIT},
+      </if>
+      <if test="record.trash != null" >
+        trash = #{record.trash,jdbcType=BIT},
+      </if>
+      <if test="record.isDelete != null" >
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_file
+    set file_id = #{record.fileId,jdbcType=CHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      size = #{record.size,jdbcType=CHAR},
+      owner = #{record.owner,jdbcType=VARCHAR},
+      path = #{record.path,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=CHAR},
+      modi_time = #{record.modiTime,jdbcType=CHAR},
+      is_directory = #{record.isDirectory,jdbcType=BIT},
+      share = #{record.share,jdbcType=BIT},
+      trash = #{record.trash,jdbcType=BIT},
+      is_delete = #{record.isDelete,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinuxes.cloud.entity.File" >
+    update t_file
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=CHAR},
+      </if>
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="modiTime != null" >
+        modi_time = #{modiTime,jdbcType=CHAR},
+      </if>
+      <if test="isDirectory != null" >
+        is_directory = #{isDirectory,jdbcType=BIT},
+      </if>
+      <if test="share != null" >
+        share = #{share,jdbcType=BIT},
+      </if>
+      <if test="trash != null" >
+        trash = #{trash,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where file_id = #{fileId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinuxes.cloud.entity.File" >
+    update t_file
+    set name = #{name,jdbcType=VARCHAR},
+      size = #{size,jdbcType=CHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=CHAR},
+      modi_time = #{modiTime,jdbcType=CHAR},
+      is_directory = #{isDirectory,jdbcType=BIT},
+      share = #{share,jdbcType=BIT},
+      trash = #{trash,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where file_id = #{fileId,jdbcType=CHAR}
+  </update>
+
+  <!-- 自定义sql -->
+  <select id="selectFilesByPath" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where path=#{homePath} and trash = 0 and is_delete = 0
+    order by create_time desc
+  </select>
+
+  <select id="selectHomePathInfoByPathAndOwner" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where path=#{homePath} and owner=#{account}
+  </select>
+
+  <select id="selectAllFoldersByOwner" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where owner=#{owner} and is_directory=1 and trash=0 and is_delete=0
+    order by create_time desc
+  </select>
+
+  <select id="selectFileByFileId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where file_id=#{fileId} and trash=0 and is_delete=0
+  </select>
+
+  <update id="updateParentIdAndPathByFileId">
+    update t_file
+    set parent_id = #{parentId},
+        path = #{path}
+    where file_id = #{fileId}
+  </update>
+
+  <update id="updateChildrenFilesPathByPath">
+    update t_file
+    set path=concat(#{afterPath}, substring(path,char_length(#{originPath})+1))
+    where path like concat("%",#{replaceOriginPath},"%")
+  </update>
+
+  <select id="selectFileByParentIdAndName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where parent_id = #{parentId} and name=#{name}
+  </select>
+
+  <select id="selectFileByFileIdAndTrash" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where file_id = #{fileId} and trash = 0
+  </select>
+
+  <update id="updateTrashByFileId">
+    update t_file
+    set trash = 1
+    where file_id = #{fileId}
+  </update>
+
+  <select id="selectFilesByOwnerAndTrashAndIsDelete" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where owner = #{account} and trash = 1 and is_delete = 0
+  </select>
+</mapper>

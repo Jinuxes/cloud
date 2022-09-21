@@ -3,6 +3,7 @@ package com.jinuxes.cloud.service.api;
 import com.github.pagehelper.PageInfo;
 import com.jinuxes.cloud.entity.User;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface UserService {
@@ -14,7 +15,7 @@ public interface UserService {
 
     PageInfo<User> getUserPageInfo(Integer pageNum, Integer pageSize, String keyword);
 
-    void saveUser(User user);
+    void saveUser(User user, HttpSession httpSession);
 
     User getUserByAccount(String account);
 

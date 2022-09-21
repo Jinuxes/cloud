@@ -31,18 +31,18 @@
                         <a href="file"><i class="glyphicon glyphicon-list"></i> 全部文件</a>
                     </li>
                     <li style="height:30px;">
-                        <a href="auth_adv.html"><i class="glyphicon glyphicon-file"></i> 文档</a>
+                        <a href="#"><i class="glyphicon glyphicon-file"></i> 文档</a>
                     </li>
                     <li style="height:30px;">
-                        <a href="auth_project.html"><i class="glyphicon glyphicon-picture"></i> 图片</a>
+                        <a href="#"><i class="glyphicon glyphicon-picture"></i> 图片</a>
                     </li>
                     <li style="height:30px;">
-                        <a href="auth_project.html"><i class="glyphicon glyphicon-facetime-video"></i> 视频</a>
+                        <a href="#"><i class="glyphicon glyphicon-facetime-video"></i> 视频</a>
                     </li>
                 </ul>
             </li>
             <li class="list-group-item tree-closed">
-                <span><i class="glyphicon glyphicon-triangle-right"></i> 回收站</span>
+                <span><i class="glyphicon glyphicon-triangle-right"></i><a style="text-decoration: none;color: #000000" href="file/recycle"> 回收站</a></span>
             </li>
         </ul>
     </div>

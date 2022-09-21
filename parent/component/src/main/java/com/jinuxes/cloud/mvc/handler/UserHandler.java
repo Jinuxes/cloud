@@ -1,13 +1,12 @@
 package com.jinuxes.cloud.mvc.handler;
 
 import com.github.pagehelper.PageInfo;
+import com.jinuxes.cloud.entity.File;
 import com.jinuxes.cloud.entity.SecurityUserDetail;
 import com.jinuxes.cloud.entity.User;
+import com.jinuxes.cloud.service.api.FileService;
 import com.jinuxes.cloud.service.api.UserService;
-import com.jinuxes.cloud.utils.DateUtil;
-import com.jinuxes.cloud.utils.FileUtils;
-import com.jinuxes.cloud.utils.ResultEntity;
-import com.jinuxes.cloud.utils.ValidatorGroups;
+import com.jinuxes.cloud.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -66,18 +64,16 @@ public class UserHandler {
     // 保存用户
     @RequestMapping("/user/save")
     @ResponseBody
-    public ResultEntity<String> saveUser(@Validated(ValidatorGroups.AddUser.class) User user, BindingResult bindingResult, HttpSession session) throws IOException {
+    public ResultEntity<String> saveUser(@Validated(ValidatorGroups.AddUser.class) User user, BindingResult bindingResult, HttpSession session){
         if(bindingResult.hasErrors()){
             // 校验失败，返回错误信息
             FieldError fieldError = bindingResult.getFieldErrors().get(0);
             return ResultEntity.failed(fieldError.getDefaultMessage());
         }else{
             // 校验成功
-            user.setCreateTime(DateUtil.getCurrentDateTime());
-            userService.saveUser(user);
-
-            // // 给新增的用户创建个人Home目录
-            // FileUtils.makeHomeDirectory(session,user.getAccount());
+            String currentDateTime = DateUtil.getCurrentDateTime();
+            user.setCreateTime(currentDateTime);
+            userService.saveUser(user, session);
 
             return ResultEntity.successWithoutData();
         }
