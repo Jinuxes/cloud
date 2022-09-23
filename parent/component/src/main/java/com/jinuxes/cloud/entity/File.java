@@ -5,7 +5,7 @@ public class File {
 
     private String name;
 
-    private String size;
+    private Long size;
 
     private String owner;
 
@@ -21,14 +21,16 @@ public class File {
 
     private Boolean share;
 
-    private Boolean trash;
+    private Integer trash;
+
+    private String deleteTime;
 
     private Boolean isDelete;
 
     public File() {
     }
 
-    public File(String fileId, String name, String size, String owner, String path, String parentId, String createTime, String modiTime, Boolean isDirectory, Boolean share, Boolean trash, Boolean isDelete) {
+    public File(String fileId, String name, Long size, String owner, String path, String parentId, String createTime, String modiTime, Boolean isDirectory, Boolean share, Integer trash, String deleteTime, Boolean isDelete) {
         this.fileId = fileId;
         this.name = name;
         this.size = size;
@@ -40,6 +42,7 @@ public class File {
         this.isDirectory = isDirectory;
         this.share = share;
         this.trash = trash;
+        this.deleteTime = deleteTime;
         this.isDelete = isDelete;
     }
 
@@ -48,7 +51,7 @@ public class File {
         return "File{" +
                 "fileId='" + fileId + '\'' +
                 ", name='" + name + '\'' +
-                ", size='" + size + '\'' +
+                ", size=" + size +
                 ", owner='" + owner + '\'' +
                 ", path='" + path + '\'' +
                 ", parentId='" + parentId + '\'' +
@@ -57,6 +60,7 @@ public class File {
                 ", isDirectory=" + isDirectory +
                 ", share=" + share +
                 ", trash=" + trash +
+                ", deleteTime='" + deleteTime + '\'' +
                 ", isDelete=" + isDelete +
                 '}';
     }
@@ -77,12 +81,12 @@ public class File {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(String size) {
-        this.size = size == null ? null : size.trim();
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     public String getOwner() {
@@ -141,12 +145,20 @@ public class File {
         this.share = share;
     }
 
-    public Boolean getTrash() {
+    public Integer getTrash() {
         return trash;
     }
 
-    public void setTrash(Boolean trash) {
+    public void setTrash(Integer trash) {
         this.trash = trash;
+    }
+
+    public String getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(String deleteTime) {
+        this.deleteTime = deleteTime == null ? null : deleteTime.trim();
     }
 
     public Boolean getIsDelete() {

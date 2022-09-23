@@ -254,62 +254,52 @@ public class FileExample {
             return (Criteria) this;
         }
 
-        public Criteria andSizeEqualTo(String value) {
+        public Criteria andSizeEqualTo(Long value) {
             addCriterion("size =", value, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeNotEqualTo(String value) {
+        public Criteria andSizeNotEqualTo(Long value) {
             addCriterion("size <>", value, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeGreaterThan(String value) {
+        public Criteria andSizeGreaterThan(Long value) {
             addCriterion("size >", value, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeGreaterThanOrEqualTo(String value) {
+        public Criteria andSizeGreaterThanOrEqualTo(Long value) {
             addCriterion("size >=", value, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeLessThan(String value) {
+        public Criteria andSizeLessThan(Long value) {
             addCriterion("size <", value, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeLessThanOrEqualTo(String value) {
+        public Criteria andSizeLessThanOrEqualTo(Long value) {
             addCriterion("size <=", value, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeLike(String value) {
-            addCriterion("size like", value, "size");
-            return (Criteria) this;
-        }
-
-        public Criteria andSizeNotLike(String value) {
-            addCriterion("size not like", value, "size");
-            return (Criteria) this;
-        }
-
-        public Criteria andSizeIn(List<String> values) {
+        public Criteria andSizeIn(List<Long> values) {
             addCriterion("size in", values, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeNotIn(List<String> values) {
+        public Criteria andSizeNotIn(List<Long> values) {
             addCriterion("size not in", values, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeBetween(String value1, String value2) {
+        public Criteria andSizeBetween(Long value1, Long value2) {
             addCriterion("size between", value1, value2, "size");
             return (Criteria) this;
         }
 
-        public Criteria andSizeNotBetween(String value1, String value2) {
+        public Criteria andSizeNotBetween(Long value1, Long value2) {
             addCriterion("size not between", value1, value2, "size");
             return (Criteria) this;
         }
@@ -794,53 +784,123 @@ public class FileExample {
             return (Criteria) this;
         }
 
-        public Criteria andTrashEqualTo(Boolean value) {
+        public Criteria andTrashEqualTo(Integer value) {
             addCriterion("trash =", value, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashNotEqualTo(Boolean value) {
+        public Criteria andTrashNotEqualTo(Integer value) {
             addCriterion("trash <>", value, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashGreaterThan(Boolean value) {
+        public Criteria andTrashGreaterThan(Integer value) {
             addCriterion("trash >", value, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andTrashGreaterThanOrEqualTo(Integer value) {
             addCriterion("trash >=", value, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashLessThan(Boolean value) {
+        public Criteria andTrashLessThan(Integer value) {
             addCriterion("trash <", value, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashLessThanOrEqualTo(Boolean value) {
+        public Criteria andTrashLessThanOrEqualTo(Integer value) {
             addCriterion("trash <=", value, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashIn(List<Boolean> values) {
+        public Criteria andTrashIn(List<Integer> values) {
             addCriterion("trash in", values, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashNotIn(List<Boolean> values) {
+        public Criteria andTrashNotIn(List<Integer> values) {
             addCriterion("trash not in", values, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashBetween(Boolean value1, Boolean value2) {
+        public Criteria andTrashBetween(Integer value1, Integer value2) {
             addCriterion("trash between", value1, value2, "trash");
             return (Criteria) this;
         }
 
-        public Criteria andTrashNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andTrashNotBetween(Integer value1, Integer value2) {
             addCriterion("trash not between", value1, value2, "trash");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeIsNull() {
+            addCriterion("delete_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeIsNotNull() {
+            addCriterion("delete_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeEqualTo(String value) {
+            addCriterion("delete_time =", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeNotEqualTo(String value) {
+            addCriterion("delete_time <>", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeGreaterThan(String value) {
+            addCriterion("delete_time >", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("delete_time >=", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeLessThan(String value) {
+            addCriterion("delete_time <", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeLessThanOrEqualTo(String value) {
+            addCriterion("delete_time <=", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeLike(String value) {
+            addCriterion("delete_time like", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeNotLike(String value) {
+            addCriterion("delete_time not like", value, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeIn(List<String> values) {
+            addCriterion("delete_time in", values, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeNotIn(List<String> values) {
+            addCriterion("delete_time not in", values, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeBetween(String value1, String value2) {
+            addCriterion("delete_time between", value1, value2, "deleteTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteTimeNotBetween(String value1, String value2) {
+            addCriterion("delete_time not between", value1, value2, "deleteTime");
             return (Criteria) this;
         }
 

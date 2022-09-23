@@ -68,7 +68,7 @@ function fillTableBody(fileList){
     fillPathNavigationBar();
 
     if(fileList == null || fileList.length == 0){
-        $("#filePageBody").append("<tr><td colspan='5' align='center'>当前文件夹为空</td></tr>")
+        $("#filePageBody").append("<tr><td colspan='5' align='center'>没有文件</td></tr>")
         return;
     }
     for(var i=0;i<fileList.length;i++){
@@ -105,8 +105,7 @@ function fillPathNavigationBar(){
 
     if(path == "\\"){
         $("#filePathNavigationBar").append("<li class='active'>首页</li>");
-    }
-    else{
+    }else{
         $("#filePathNavigationBar").append("<li path='\\'><a href='javascript:;'>首页</a></li>");
         var splitPath = path.split("\\");
         splitPath.pop();  // 删除分割的数组最后一个""空元素
@@ -163,6 +162,7 @@ function evenBinding(){
     deleteButtonClick();
     fileDeleteConfirmButtonClick();
     fileBatchDeleteButtonClick();
+    fileSearchButtonClick();
 }
 
 // 创建文件夹按钮点击事件
@@ -669,5 +669,35 @@ function fileBatchDeleteButtonClick(){
 
         // 弹出删除确认模态框
         $("#fileDeleteConfirmModal").modal("show");
+    });
+}
+
+// 查询按钮点击事件
+function fileSearchButtonClick(){
+    $("#fileSearchBtn").click(function(){
+       var keyword = $("#fileSearchInput").val();
+       $.ajax({
+           "url":"file/search",
+           "type":"post",
+           "data":{
+               "keyword":keyword,
+           },
+           "dataType":"json",
+           "success":function(response){
+               var code = response.code;
+               if(code == "0"){
+                   // 获取数据渲染页面
+                   var data = response.data;
+                   fillTableBody(data);
+               }
+               if(code == "1"){
+                   layer.msg(response.msg);
+               }
+           },
+           "error":function(error){
+               layer.msg(error.status+" "+error.statusText);
+           }
+       })
+
     });
 }

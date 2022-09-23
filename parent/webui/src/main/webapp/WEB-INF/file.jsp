@@ -36,15 +36,15 @@
                     <button id="createFolderBtn" type="button" class="btn btn-default" style="float:left;margin-right:10px;"><i class="glyphicon glyphicon-folder-open"></i> 新建文件夹</button>
                     <button id="filesDownloadBtn" type="button" class="btn btn-default" style="float:left;margin-right:10px;"><i class="glyphicon glyphicon-cloud-download"></i> 下载</button>
                     <button id="fileUploadBtn" type="button" class="btn btn-default" style="float:left;margin-right:10px;"><i class="glyphicon glyphicon-cloud-upload"></i> 上传</button>
-                    <button id="fileBatchDeleteBtn" type="button" class="btn btn-danger" style="float:left;"><i class="glyphicon glyphicon-floppy-remove"></i> 批量删除</button>
+                    <button id="fileBatchDeleteBtn" type="button" class="btn btn-danger" style="float:left;"><i class="glyphicon glyphicon-trash"></i> 批量删除</button>
                     <form class="form-inline" role="form" style="float:right;">
                         <div class="form-group has-feedback">
                             <div class="input-group">
                                 <div class="input-group-addon">搜索文件</div>
-                                <input class="form-control has-success" type="text" placeholder="请输入文件名关键字">
+                                <input id="fileSearchInput" class="form-control has-success" type="text" placeholder="请输入文件名关键字">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> 搜索</button>
+                        <button id="fileSearchBtn" type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> 搜索</button>
                     </form>
                     <br>
                     <hr style="clear:both;">
@@ -60,54 +60,7 @@
                             </tr>
                             </thead>
                             <tbody id="filePageBody">
-                            <%--<tr>--%>
-                            <%--    <td><input type="checkbox"></td>--%>
-                            <%--    <td>--%>
-                            <%--        <div>--%>
-                            <%--            <img class="icon-folder-and-file" src="static/image/icon/icon_folder.png" alt="folder"/>--%>
-                            <%--            <a href="#">Java教学视频</a>--%>
-                            <%--        </div>--%>
-                            <%--    </td>--%>
-                            <%--    <td>2022-09-06 14:05:21</td>--%>
-                            <%--    <td>66.1M</td>--%>
-                            <%--    <td>--%>
-                            <%--        <button type="button" title="下载" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-download-alt"></i></button>--%>
-                            <%--        <button type="button" title="移动" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-move"></i></button>--%>
-                            <%--        <button type="button" title="删除" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>--%>
-                            <%--    </td>--%>
-                            <%--</tr>--%>
-                            <%--<tr>--%>
-                            <%--    <td><input type="checkbox"></td>--%>
-                            <%--    <td>--%>
-                            <%--        <div>--%>
-                            <%--            <img class="icon-folder-and-file" src="static/image/icon/icon_file.png" alt="folder"/>--%>
-                            <%--            <a href="#">Python教学视频</a>--%>
-                            <%--        </div>--%>
-                            <%--    </td>--%>
-                            <%--    <td>consectetur</td>--%>
-                            <%--    <td>adipiscing</td>--%>
-                            <%--    <td>--%>
-                            <%--        <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>--%>
-                            <%--        <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>--%>
-                            <%--        <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>--%>
-                            <%--    </td>--%>
-                            <%--</tr>--%>
                             </tbody>
-                            <%--<tfoot>--%>
-                            <%--<tr>--%>
-                            <%--    <td colspan="6" align="center">--%>
-                            <%--        <ul class="pagination">--%>
-                            <%--            <li class="disabled"><a href="#">上一页</a></li>--%>
-                            <%--            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>--%>
-                            <%--            <li><a href="#">2</a></li>--%>
-                            <%--            <li><a href="#">3</a></li>--%>
-                            <%--            <li><a href="#">4</a></li>--%>
-                            <%--            <li><a href="#">5</a></li>--%>
-                            <%--            <li><a href="#">下一页</a></li>--%>
-                            <%--        </ul>--%>
-                            <%--    </td>--%>
-                            <%--</tr>--%>
-                            <%--</tfoot>--%>
                         </table>
                     </div>
                 </div>

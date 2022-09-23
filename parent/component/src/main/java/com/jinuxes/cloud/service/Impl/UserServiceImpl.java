@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
             file.setCreateTime(createDateTime);
             file.setIsDirectory(true);
             file.setShare(false);
-            file.setTrash(false);
+            file.setTrash(0);
             file.setIsDelete(false);
             // 调用fileMapper保存创建的目录信息到数据库
             fileMapper.insertSelective(file);

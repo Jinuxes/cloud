@@ -118,6 +118,16 @@ public class ExceptionResolver {
         return resolve("error",exception,request,response);
     }
 
+    /**
+     * 恢复文件错误异常RecoveryFileException
+     */
+    @ExceptionHandler(value= RecoveryFileException.class)
+    public ModelAndView resolveRecoveryFileException(RecoveryFileException exception,
+                                                     HttpServletRequest request,
+                                                     HttpServletResponse response) throws IOException {
+        return resolve("error",exception,request,response);
+    }
+
     private ModelAndView resolve(String viewName,
                                  Exception exception,
                                  HttpServletRequest request,

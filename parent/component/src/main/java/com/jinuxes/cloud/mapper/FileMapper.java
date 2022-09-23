@@ -44,7 +44,17 @@ public interface FileMapper {
 
     File selectFileByFileIdAndTrash(String fileId);
 
-    void updateTrashByFileId(String fileId);
+    void updateTrashByFileId(@Param("fileId")String fileId, @Param("deleteTime")String deleteTime);
 
     List<File> selectFilesByOwnerAndTrashAndIsDelete(String account);
+
+    void updateTrashByPath(@Param("path")String path, @Param("deleteTime")String deleteTime);
+
+    List<File> selectFilesByNameKeyword(@Param("owner")String owner, @Param("keyword")String keyword);
+
+    File selectRecoveryFileByFileIdAndTrash(String fileId);
+
+    void updateRecoveryTrashByFileId(String fileId);
+
+    void updateRecoveryTrashByPath(String path);
 }

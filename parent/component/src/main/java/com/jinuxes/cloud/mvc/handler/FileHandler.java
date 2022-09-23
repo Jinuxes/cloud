@@ -16,24 +16,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class FileHandler {
@@ -96,7 +91,7 @@ public class FileHandler {
         // 设置is_directory、share、trash、is_delete
         file.setIsDirectory(true);
         file.setShare(false);
-        file.setTrash(false);
+        file.setTrash(0);
         file.setIsDelete(false);
         fileService.saveFile(file, session);
         return ResultEntity.successWithoutData();
@@ -110,7 +105,7 @@ public class FileHandler {
             File fileEntity = new File();
             fileEntity.setFileId(UUIDUtils.getUUID());
             fileEntity.setName(multipartFile.getOriginalFilename());
-            fileEntity.setSize(String.valueOf(multipartFile.getSize()));
+            fileEntity.setSize(multipartFile.getSize());
 
             User currentUser = getOriginalUser(session);
             String account = currentUser.getAccount();
@@ -123,7 +118,7 @@ public class FileHandler {
             fileEntity.setCreateTime(DateUtil.getCurrentDateTime());
             fileEntity.setIsDirectory(false);
             fileEntity.setShare(false);
-            fileEntity.setTrash(false);
+            fileEntity.setTrash(0);
             fileEntity.setIsDelete(false);
             fileService.saveUploadFile(multipartFile, fileEntity, session);
         }
@@ -319,6 +314,25 @@ public class FileHandler {
         String account = user.getAccount();
         List<File> fileList = fileService.getFileRecycleInfo(account);
         return ResultEntity.successWithData(fileList);
+    }
+
+    @RequestMapping("/file/search")
+    @ResponseBody
+    public ResultEntity getFileByNameKeyword(String keyword, HttpSession session){
+        if(keyword == "" || keyword == null){
+            return ResultEntity.failed("搜索关键字不能为空");
+        }
+        User user = getOriginalUser(session);
+        String account = user.getAccount();
+        List<File> fileList = fileService.getFileByNameKeyword(account, keyword);
+        return ResultEntity.successWithData(fileList);
+    }
+
+    @RequestMapping("/file/recovery")
+    @ResponseBody
+    public ResultEntity updateFileAndRecoveryByFileIds(@RequestParam("fileIds") List<String> fileIds, HttpSession session){
+        fileService.recoveryFileByFileIds(fileIds, session);
+        return ResultEntity.successWithoutData();
     }
 
     // private String getServerRealPath(HttpSession session){

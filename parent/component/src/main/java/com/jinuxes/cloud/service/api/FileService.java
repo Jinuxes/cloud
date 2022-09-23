@@ -28,4 +28,11 @@ public interface FileService {
     void deleteFiles(List<String> fileIds, HttpSession session);
 
     List<File> getFileRecycleInfo(String account);
+
+    List<File> getFileByNameKeyword(String owner, String keyword);
+
+    void recoveryFileByFileIds(List<String> fileIds, HttpSession session);
+    // void updateFileAndRecoveryByFileIds(List<String> fileIds, HttpSession session);
+
+    // void updateRecoveryOneFile(HttpSession session, File file);
 }

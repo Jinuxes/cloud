@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.jinuxes.cloud.entity.File" >
     <id column="file_id" property="fileId" jdbcType="CHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="size" property="size" jdbcType="CHAR" />
+    <result column="size" property="size" jdbcType="BIGINT" />
     <result column="owner" property="owner" jdbcType="VARCHAR" />
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="CHAR" />
@@ -12,7 +12,8 @@
     <result column="modi_time" property="modiTime" jdbcType="CHAR" />
     <result column="is_directory" property="isDirectory" jdbcType="BIT" />
     <result column="share" property="share" jdbcType="BIT" />
-    <result column="trash" property="trash" jdbcType="BIT" />
+    <result column="trash" property="trash" jdbcType="INTEGER" />
+    <result column="delete_time" property="deleteTime" jdbcType="CHAR" />
     <result column="is_delete" property="isDelete" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     file_id, name, size, owner, path, parent_id, create_time, modi_time, is_directory, 
-    share, trash, is_delete
+    share, trash, delete_time, is_delete
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jinuxes.cloud.entity.FileExample" >
     select
@@ -111,11 +112,13 @@
     insert into t_file (file_id, name, size, 
       owner, path, parent_id, 
       create_time, modi_time, is_directory, 
-      share, trash, is_delete)
-    values (#{fileId,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{size,jdbcType=CHAR}, 
+      share, trash, delete_time, 
+      is_delete)
+    values (#{fileId,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, 
       #{owner,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{parentId,jdbcType=CHAR}, 
       #{createTime,jdbcType=CHAR}, #{modiTime,jdbcType=CHAR}, #{isDirectory,jdbcType=BIT}, 
-      #{share,jdbcType=BIT}, #{trash,jdbcType=BIT}, #{isDelete,jdbcType=BIT})
+      #{share,jdbcType=BIT}, #{trash,jdbcType=INTEGER}, #{deleteTime,jdbcType=CHAR}, 
+      #{isDelete,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.jinuxes.cloud.entity.File" >
     insert into t_file
@@ -153,6 +156,9 @@
       <if test="trash != null" >
         trash,
       </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
       <if test="isDelete != null" >
         is_delete,
       </if>
@@ -165,7 +171,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="size != null" >
-        #{size,jdbcType=CHAR},
+        #{size,jdbcType=BIGINT},
       </if>
       <if test="owner != null" >
         #{owner,jdbcType=VARCHAR},
@@ -189,7 +195,10 @@
         #{share,jdbcType=BIT},
       </if>
       <if test="trash != null" >
-        #{trash,jdbcType=BIT},
+        #{trash,jdbcType=INTEGER},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=CHAR},
       </if>
       <if test="isDelete != null" >
         #{isDelete,jdbcType=BIT},
@@ -212,7 +221,7 @@
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.size != null" >
-        size = #{record.size,jdbcType=CHAR},
+        size = #{record.size,jdbcType=BIGINT},
       </if>
       <if test="record.owner != null" >
         owner = #{record.owner,jdbcType=VARCHAR},
@@ -236,7 +245,10 @@
         share = #{record.share,jdbcType=BIT},
       </if>
       <if test="record.trash != null" >
-        trash = #{record.trash,jdbcType=BIT},
+        trash = #{record.trash,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteTime != null" >
+        delete_time = #{record.deleteTime,jdbcType=CHAR},
       </if>
       <if test="record.isDelete != null" >
         is_delete = #{record.isDelete,jdbcType=BIT},
@@ -250,7 +262,7 @@
     update t_file
     set file_id = #{record.fileId,jdbcType=CHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      size = #{record.size,jdbcType=CHAR},
+      size = #{record.size,jdbcType=BIGINT},
       owner = #{record.owner,jdbcType=VARCHAR},
       path = #{record.path,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=CHAR},
@@ -258,7 +270,8 @@
       modi_time = #{record.modiTime,jdbcType=CHAR},
       is_directory = #{record.isDirectory,jdbcType=BIT},
       share = #{record.share,jdbcType=BIT},
-      trash = #{record.trash,jdbcType=BIT},
+      trash = #{record.trash,jdbcType=INTEGER},
+      delete_time = #{record.deleteTime,jdbcType=CHAR},
       is_delete = #{record.isDelete,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -271,7 +284,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="size != null" >
-        size = #{size,jdbcType=CHAR},
+        size = #{size,jdbcType=BIGINT},
       </if>
       <if test="owner != null" >
         owner = #{owner,jdbcType=VARCHAR},
@@ -295,7 +308,10 @@
         share = #{share,jdbcType=BIT},
       </if>
       <if test="trash != null" >
-        trash = #{trash,jdbcType=BIT},
+        trash = #{trash,jdbcType=INTEGER},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=CHAR},
       </if>
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=BIT},
@@ -306,7 +322,7 @@
   <update id="updateByPrimaryKey" parameterType="com.jinuxes.cloud.entity.File" >
     update t_file
     set name = #{name,jdbcType=VARCHAR},
-      size = #{size,jdbcType=CHAR},
+      size = #{size,jdbcType=BIGINT},
       owner = #{owner,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=CHAR},
@@ -314,7 +330,8 @@
       modi_time = #{modiTime,jdbcType=CHAR},
       is_directory = #{isDirectory,jdbcType=BIT},
       share = #{share,jdbcType=BIT},
-      trash = #{trash,jdbcType=BIT},
+      trash = #{trash,jdbcType=INTEGER},
+      delete_time = #{deleteTime,jdbcType=CHAR},
       is_delete = #{isDelete,jdbcType=BIT}
     where file_id = #{fileId,jdbcType=CHAR}
   </update>
@@ -362,7 +379,7 @@
   <select id="selectFileByParentIdAndName" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from t_file
-    where parent_id = #{parentId} and name=#{name}
+    where parent_id = #{parentId} and name=#{name} and trash = 0 and is_delete = 0
   </select>
 
   <select id="selectFileByFileIdAndTrash" resultMap="BaseResultMap">
@@ -373,7 +390,7 @@
 
   <update id="updateTrashByFileId">
     update t_file
-    set trash = 1
+    set trash = 1, delete_time = #{deleteTime}
     where file_id = #{fileId}
   </update>
 
@@ -381,5 +398,36 @@
     select <include refid="Base_Column_List"/>
     from t_file
     where owner = #{account} and trash = 1 and is_delete = 0
+    order by delete_time desc
   </select>
+
+  <update id="updateTrashByPath">
+    update t_file
+    set trash = 2, delete_time = #{deleteTime}
+    where path like concat(#{path},"%")
+  </update>
+
+  <select id="selectFilesByNameKeyword" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where owner = #{owner} and trash = 0 and is_delete = 0 and name like concat("%",#{keyword},"%")
+  </select>
+
+  <select id="selectRecoveryFileByFileIdAndTrash" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_file
+    where file_id = #{fileId} and trash = 1
+  </select>
+
+  <update id="updateRecoveryTrashByFileId">
+    update t_file
+    set trash = 0, delete_time = null
+    where file_id = #{fileId}
+  </update>
+
+  <update id="updateRecoveryTrashByPath">
+    update t_file
+    set trash = 0, delete_time = null
+    where path like concat(#{path}, "%")
+  </update>
 </mapper>

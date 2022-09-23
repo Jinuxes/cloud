@@ -34,5 +34,5 @@ public class CloudConstant {
     // 文件删除相关
     public static final String FILEINFONOTEXISTERROR = "文件信息不存在";
     public static final String FILENOTEXISTERROR = "目录下文件不存在";
-    public static final String FILEALREADYEXISTINDIRERROR = "目录下已经存在相同名字的文件";
+    public static final String FILEALREADYEXISTINDIRERROR = "目录下已经存在相同名字的文件，操作失败";
 }
