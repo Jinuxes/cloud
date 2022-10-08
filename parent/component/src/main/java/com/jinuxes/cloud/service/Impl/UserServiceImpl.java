@@ -107,6 +107,43 @@ public class UserServiceImpl implements UserService {
         userMapper.updateByUserAccount(user);
     }
 
+    @Override
+    public void saveRegisterUser(User user, HttpSession session) {
+        User result = getUserByAccount(user.getAccount());
+        if(result == null){
+            // 对密码进行加密，使用的是BCryptPasswordEncoder
+            String password = user.getPassword();
+            user.setPassword(bCryptPasswordEncoder.encode(password));
+            userMapper.insert(user);
+
+            // 创建用户家目录
+            String account = user.getAccount();
+            String createDateTime = user.getCreateTime();
+            File file = new File();
+            file.setFileId(UUIDUtils.getUUID());
+            file.setName(account);  // home目录名就是账户名
+            file.setOwner(account);  // 所有者也是账户名，其实也可以使用userId
+            file.setPath("\\");  // 项目中的files目录就是文件的根路径，所以新建用户的home目录就是挂在这个files目录下的，“\”就是files目录
+            file.setCreateTime(createDateTime);
+            file.setIsDirectory(true);
+            file.setShare(false);
+            file.setTrash(0);
+            file.setIsDelete(false);
+            // 调用fileMapper保存创建的目录信息到数据库
+            fileMapper.insertSelective(file);
+            // 在真实目录中给新注册的用户创建个人Home目录
+            String path = getCurrentUserHomePath(session, account);
+            try {
+                FileUtils.makeDirectory(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            throw new AccountAlreadyUseException("账号已被注册使用");
+        }
+    }
+
     private String getCurrentUserHomePath(HttpSession session, String account){
         ServletContext servletContext = session.getServletContext();
         String realPath = servletContext.getRealPath(java.io.File.separator);

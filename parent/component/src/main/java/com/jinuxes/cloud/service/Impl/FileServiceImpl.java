@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -177,9 +178,8 @@ public class FileServiceImpl implements FileService {
             String absPath = getFilesRootPath(session) + file.getPath() + file.getName();
             String newAbsPath = getFilesRootPath(session) + file.getPath() + trashFileName;
             // 如果所有需要删除的文件在数据库中都存在，则修改数据库的trash字段为1，将文件标记为回收站文件
-            // 注意：这里即使是删除的是目录，那么目录下的子文件信息在数据库中是没有变化的，trash字段也不设置为1，这样方便回收站对已经删除的数据进行显示。
-            String deleteTime = DateUtil.getCurrentDateTime();
-            fileMapper.updateTrashByFileId(file.getFileId(), deleteTime);
+            String trashTime = DateUtil.getCurrentDateTime();
+            fileMapper.updateTrashByFileId(file.getFileId(), trashTime);
 
             // 如果删除的是目录，那么目录下的所有子文件的trash字段都设置为2。这样设置是为了方便回收站中显示被删除的目录，而不显示被删除目录下的文件。
             // 说明：
@@ -188,7 +188,7 @@ public class FileServiceImpl implements FileService {
             //      trash字段为2表示文件是连带删除至回收站的，就是删除了其父目录导致文件被删除。
             if(file.getIsDirectory()){
                 String currentDirPath = (file.getPath() + file.getName() + java.io.File.separator).replaceAll("\\\\", "\\\\\\\\");
-                fileMapper.updateTrashByPath(currentDirPath, deleteTime);
+                fileMapper.updateTrashByPath(currentDirPath, file.getFileId(), trashTime);
             }
 
             // 修改原路径下的文件名，将fileId作为文件名的前缀。
@@ -236,7 +236,7 @@ public class FileServiceImpl implements FileService {
                 fileMapper.updateRecoveryTrashByFileId(file.getFileId());
                 if(file.getIsDirectory()){
                     String currentDirPath = (file.getPath() + file.getName() + java.io.File.separator).replaceAll("\\\\", "\\\\\\\\");
-                    fileMapper.updateRecoveryTrashByPath(currentDirPath);
+                    fileMapper.updateRecoveryTrashByPathAndTrashBy(currentDirPath, file.getFileId());
                 }
                 FileUtils.renameFile(absPath, newAbsPath);
                 dataSourceTransactionManager.commit(status);  // 提交事务
@@ -257,10 +257,36 @@ public class FileServiceImpl implements FileService {
             }
             throw new RecoveryFileException(errorMsg);
         }
-        // System.out.println(recoveryFileErrorMessages.size());
     }
 
-    // // 将批量恢复文件，对文件进行改名字修改数据库的循环操作封装成一个service层的方法，让每次for循环中对一个文件的操作都单独创建一个事务。
+    @Override
+    public void deleteFileByFileId(List<String> fileIds) {
+        // 回收站删除文件，逻辑上永久删除，只是将is_delete字段设置为1，真实路径下的文件不用任何操作
+        List<File> fileList = new ArrayList<>();
+        for(String fileId: fileIds){
+            // 查询看传过来的文件ID是否在数据库中存在
+            File file = fileMapper.selectTrashFileByFileIdAndTrash(fileId);
+            if(file == null){
+                throw new FileNotExistException(CloudConstant.FILEINFONOTEXISTERROR);
+            }
+            fileList.add(file);
+        }
+
+        for(File file:fileList){
+            fileMapper.updateIsDeleteByFileId(file.getFileId());
+            if(file.getIsDirectory()){
+                // 如果删除的文件是一个目录，那么也要将其下的所有子文件的is_delete字段设置为1
+                fileMapper.updateIsDeleteByTrashBy(file.getFileId());
+            }
+        }
+    }
+
+    @Override
+    public BigInteger getFileCapacity(String owner) {
+        return fileMapper.selectFileCapacityByOwner(owner);
+    }
+
+// // 将批量恢复文件，对文件进行改名字修改数据库的循环操作封装成一个service层的方法，让每次for循环中对一个文件的操作都单独创建一个事务。
     // // 这样在批量恢复文件的时候，如果某个文件在原来文件夹已经有同名文件，就会单独回滚，不至于影响其它文件。导致其它文件成功恢复了，但是数据库回滚了，结果就是数据库中显示文件已被删除到回收站，但是实际文件名字已经改成没有删除至回收站的结果。
     // // 当然，这样做有效的前提是配置好事务，指定事物的propagation="REQUIRES_NEW"，且文件名在切入点表达式范围。还需要给调用这个service方法的service加上默认的事务行为。即PROPAGATION_REQUIRED
     // @Override

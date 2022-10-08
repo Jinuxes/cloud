@@ -35,12 +35,13 @@
             <a href="#">忘记密码?</a>
             <div>
                 <button type="submit">登录</button>
-                <button type="button">注册</button>
+                <button id="registerBtn" type="button" onclick="window.location.href='register'">注册</button>
             </div>
         </div>
     </div>
 </form>
 
-<script></script>
+<script>
+</script>
 </body>
 </html>

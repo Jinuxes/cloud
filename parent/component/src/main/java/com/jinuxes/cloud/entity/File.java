@@ -23,14 +23,16 @@ public class File {
 
     private Integer trash;
 
-    private String deleteTime;
+    private String trashBy;
+
+    private String trashTime;
 
     private Boolean isDelete;
 
     public File() {
     }
 
-    public File(String fileId, String name, Long size, String owner, String path, String parentId, String createTime, String modiTime, Boolean isDirectory, Boolean share, Integer trash, String deleteTime, Boolean isDelete) {
+    public File(String fileId, String name, Long size, String owner, String path, String parentId, String createTime, String modiTime, Boolean isDirectory, Boolean share, Integer trash, String trashBy, String trashTime, Boolean isDelete) {
         this.fileId = fileId;
         this.name = name;
         this.size = size;
@@ -42,7 +44,8 @@ public class File {
         this.isDirectory = isDirectory;
         this.share = share;
         this.trash = trash;
-        this.deleteTime = deleteTime;
+        this.trashBy = trashBy;
+        this.trashTime = trashTime;
         this.isDelete = isDelete;
     }
 
@@ -60,7 +63,8 @@ public class File {
                 ", isDirectory=" + isDirectory +
                 ", share=" + share +
                 ", trash=" + trash +
-                ", deleteTime='" + deleteTime + '\'' +
+                ", trashBy='" + trashBy + '\'' +
+                ", trashTime='" + trashTime + '\'' +
                 ", isDelete=" + isDelete +
                 '}';
     }
@@ -153,12 +157,20 @@ public class File {
         this.trash = trash;
     }
 
-    public String getDeleteTime() {
-        return deleteTime;
+    public String getTrashBy() {
+        return trashBy;
     }
 
-    public void setDeleteTime(String deleteTime) {
-        this.deleteTime = deleteTime == null ? null : deleteTime.trim();
+    public void setTrashBy(String trashBy) {
+        this.trashBy = trashBy == null ? null : trashBy.trim();
+    }
+
+    public String getTrashTime() {
+        return trashTime;
+    }
+
+    public void setTrashTime(String trashTime) {
+        this.trashTime = trashTime == null ? null : trashTime.trim();
     }
 
     public Boolean getIsDelete() {

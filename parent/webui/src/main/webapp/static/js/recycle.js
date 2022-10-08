@@ -36,7 +36,7 @@ function fillRecycleTableBody(fileList){
         }else{
             var fileNameTd = "<td class='fileNameTd' id='"+ file.fileId + "'" + "path='" + file.path.replace('\\' + file.owner,'') + file.name +"'>" + "<div>" + "<img class='icon-folder-and-file' src='static/image/icon/icon_file.png' alt='file'/>" + file.name + "</div>" + "</td>";
         }
-        var createTimeTd = "<td>" + file.deleteTime + "</td>";
+        var createTimeTd = "<td>" + file.trashTime + "</td>";
         if(is_directory == true){
             var sizeTd = "<td>" + "-" + "</td>";
         }else{
@@ -79,6 +79,9 @@ function evenBinding(){
     selectOne();
     recoveryButtonClick();
     fileBatchRecoveryButtonClick();
+    fileDeleteButtonClick();
+    recycleDeleteConfirmButtonClick();
+    fileBatchDeleteButtonClick();
 }
 
 // checkbox全选事件
@@ -106,34 +109,12 @@ function recoveryButtonClick(){
         var fileIds = [];
         fileIds.push(fileId);
         recoveryAjaxRequest(fileIds);
-        // $.ajax({
-        //     "url":"/file/recovery",
-        //     "type":"post",
-        //     "traditional":true,
-        //     "data":{
-        //         "fileIds":fileIds
-        //     },
-        //     "dataType":"json",
-        //     "success":function(response){
-        //         var code = response.code;
-        //         if(code == "0"){
-        //             layer.msg("恢复成功");
-        //             getRecycleFiles();
-        //         }
-        //         if(code == "1"){
-        //             layer.msg(response.msg);
-        //         }
-        //     },
-        //     "error":function(error){
-        //         layer.msg(error.status+" "+error.statusText);
-        //     }
-        // });
     });
 }
 
 function recoveryAjaxRequest(fileIds){
     $.ajax({
-        "url":"/file/recovery",
+        "url":"file/recovery",
         "type":"post",
         "traditional":true,
         "data":{
@@ -163,7 +144,7 @@ function fileBatchRecoveryButtonClick(){
     $("#fileBatchRecoveryBtn").click(function(){
         var checkedRowElements = $("#fileRecyclePageBody input[type='checkbox']:checked");
         if(checkedRowElements.length == 0){
-            layer.msg("请选择需要恢复的问及那");
+            layer.msg("请选择需要恢复的文件");
             return;
         }
 
@@ -175,26 +156,85 @@ function fileBatchRecoveryButtonClick(){
 
         // 发送请求
         recoveryAjaxRequest(fileIds);
-        // $.ajax({
-        //     "url":"file/recovery",
-        //     "type":"post",
-        //     "traditional":true,
-        //     "data":{
-        //         "fileIds":fileIds
-        //     },
-        //     "dataType":"json",
-        //     "success":function(response){
-        //         var code = response.code;
-        //         if(code == "0"){
-        //
-        //         }
-        //         if(code == "1"){
-        //             layer.msg(response.msg);
-        //         }
-        //     },
-        //     "error":function(error){
-        //         layer.msg(error.status+" "+error.statusText);
-        //     }
-        // })
     });
+}
+
+// 单行删除按钮点击事件
+function fileDeleteButtonClick(){
+    $("#fileRecyclePageBody").on("click","#fileDeleteBtn",function(){
+        var currentRowElement = $(this).parent().parent();
+        var fileId = currentRowElement.find(".fileNameTd").prop("id");
+        var fileIds = [];
+        fileIds.push(fileId);
+
+        // 绑定fileIds数组到回收站删除确认模态框的删除按钮上
+        $("#recycleDeleteConfirmBtn").attr("fileIds",fileIds);
+
+        // 弹出删除确认模态框
+        $("#recycleDeleteConfirmModal").modal("show");
+    });
+}
+
+// 批量删除按钮点击事件
+function fileBatchDeleteButtonClick(){
+    $("#fileBatchDeleteBtn").click(function(){
+        var checkedRowElements = $("#fileRecyclePageBody input[type='checkbox']:checked");
+        if(checkedRowElements.length == 0){
+            layer.msg("请选择需要删除的文件");
+            return;
+        }
+
+        // 获取选中的文件的fileId封装成数组
+        var fileIds = [];
+        checkedRowElements.parent().parent().find(".fileNameTd").each(function(){
+            fileIds.push($(this).prop("id"));
+        })
+
+        // 将fileIds数组绑定到模态框删除按钮上
+        $("#recycleDeleteConfirmBtn").attr("fileIds",fileIds);
+
+        // 弹出删除确认模态框
+        $("#recycleDeleteConfirmModal").modal("show");
+    })
+}
+
+// 回收站删除确认模态框中的删除按钮点击事件
+function recycleDeleteConfirmButtonClick(){
+    $("#recycleDeleteConfirmBtn").click(function(){
+        var fileIds =  $("#recycleDeleteConfirmBtn").attr("fileIds");
+
+        // 发送请求
+        deleteFileAjaxRequest(fileIds);
+    });
+}
+
+// 删除回收站文件请求
+function deleteFileAjaxRequest(fileIds){
+    $.ajax({
+        "url":"file/delete/permanently",
+        "type":"post",
+        "traditional":true,
+        "data":{
+            "fileIds":fileIds
+        },
+        "dataType":"json",
+        "success":function(response){
+            var code = response.code;
+            if(code == "0"){
+                layer.msg("删除成功");
+                // 关闭模态框
+                $("#recycleDeleteConfirmModal").modal("hide");
+                // 刷新回收站
+                getRecycleFiles();
+                // 调用include-sidebar.js文件的getCapacity()方法刷新页面容量显示
+                getCapacity();
+            }
+            if(code == "1"){
+                layer.msg(response.msg);
+            }
+        },
+        "error":function(error){
+            layer.msg(error.status+" "+error.statusText);
+        }
+    })
 }

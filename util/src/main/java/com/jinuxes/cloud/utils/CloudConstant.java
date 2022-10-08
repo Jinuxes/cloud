@@ -1,10 +1,14 @@
 package com.jinuxes.cloud.utils;
 
+import java.math.BigInteger;
+
 public class CloudConstant {
 
+    // Ajax请求返回状态码
     public static final String SUCCESS = "0";
     public static final String FAILED = "1";
 
+    // 数据校验相关
     public static final String EMAILERROR = "邮箱格式不正确";
     public static final String USERNAMEERROR = "用户名必须是2-5位中文或者6-16位英文和数字的组合";
     public static final String PASSWORDERROR = "密码必须6-18位数字、字母";
@@ -35,4 +39,10 @@ public class CloudConstant {
     public static final String FILEINFONOTEXISTERROR = "文件信息不存在";
     public static final String FILENOTEXISTERROR = "目录下文件不存在";
     public static final String FILEALREADYEXISTINDIRERROR = "目录下已经存在相同名字的文件，操作失败";
+
+    // 存储容量相关
+    public static final String USEDCAPACITYKEY = "usedCapacity"; // 已经使用的容量键值
+    public static final String TOTALCAPACITYKEY = "totalCapacity"; // 总容量键值
+    // public static final BigInteger TOTALCAPACITY = new BigInteger("107374182400");  // 单个用户存储容量上限：100G
+    public static final BigInteger TOTALCAPACITY = new BigInteger("4294967296");  // 单个用户存储容量上限：4G
 }

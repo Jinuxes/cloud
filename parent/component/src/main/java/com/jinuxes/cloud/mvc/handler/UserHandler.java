@@ -101,6 +101,28 @@ public class UserHandler {
         }
     }
 
+    @RequestMapping("/register")
+    public String registerPage(){
+        return "register";
+    }
+
+    @RequestMapping("/register/save")
+    @ResponseBody
+    public ResultEntity<String> doRegister(@Validated(ValidatorGroups.AddUser.class) User user, BindingResult bindingResult, HttpSession session){
+
+        if(bindingResult.hasErrors()){
+            // 校验失败，返回错误信息。返回第一个错误信息即可，不用全返回
+            FieldError filedError = bindingResult.getFieldErrors().get(0);
+            return ResultEntity.failed(filedError.getDefaultMessage());
+        }else{
+            // 校验成功
+            String currentDateTime = DateUtil.getCurrentDateTime();
+            user.setCreateTime(currentDateTime);
+            userService.saveRegisterUser(user, session);
+            return ResultEntity.successWithoutData();
+        }
+    }
+
     // private String getPersonHomePath(HttpSession httpSession, String account){
     //     ServletContext servletContext = httpSession.getServletContext();
     //     String realPath = servletContext.getRealPath(File.separator);

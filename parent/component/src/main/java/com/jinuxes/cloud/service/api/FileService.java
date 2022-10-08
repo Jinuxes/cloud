@@ -4,6 +4,7 @@ import com.jinuxes.cloud.entity.File;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigInteger;
 import java.util.List;
 
 public interface FileService {
@@ -32,6 +33,10 @@ public interface FileService {
     List<File> getFileByNameKeyword(String owner, String keyword);
 
     void recoveryFileByFileIds(List<String> fileIds, HttpSession session);
+
+    void deleteFileByFileId(List<String> fileIds);
+
+    BigInteger getFileCapacity(String owner);
     // void updateFileAndRecoveryByFileIds(List<String> fileIds, HttpSession session);
 
     // void updateRecoveryOneFile(HttpSession session, File file);

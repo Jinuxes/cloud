@@ -22,7 +22,7 @@
                 </div>
                 <div class="panel-body">
                     <button id="fileBatchRecoveryBtn" type="button" class="btn btn-default" style="float:left;margin-right:10px;"><i class="glyphicon glyphicon-repeat"></i> 批量恢复</button>
-                    <button type="button" class="btn btn-danger" style="float:left;"><i class="glyphicon glyphicon-remove"></i> 批量删除</button>
+                    <button id="fileBatchDeleteBtn" type="button" class="btn btn-danger" style="float:left;"><i class="glyphicon glyphicon-remove"></i> 批量删除</button>
                     <br>
                     <hr style="clear:both;">
                     <div class="table-responsive">
@@ -46,4 +46,5 @@
     </div>
 </div>
 </body>
+<%@include file="/WEB-INF/modal/recycle-delete-modal.jsp"%>
 </html>

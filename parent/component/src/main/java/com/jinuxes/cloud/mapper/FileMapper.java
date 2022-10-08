@@ -2,6 +2,8 @@ package com.jinuxes.cloud.mapper;
 
 import com.jinuxes.cloud.entity.File;
 import com.jinuxes.cloud.entity.FileExample;
+
+import java.math.BigInteger;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,11 +46,11 @@ public interface FileMapper {
 
     File selectFileByFileIdAndTrash(String fileId);
 
-    void updateTrashByFileId(@Param("fileId")String fileId, @Param("deleteTime")String deleteTime);
+    void updateTrashByFileId(@Param("fileId")String fileId, @Param("trashTime")String trashTime);
 
     List<File> selectFilesByOwnerAndTrashAndIsDelete(String account);
 
-    void updateTrashByPath(@Param("path")String path, @Param("deleteTime")String deleteTime);
+    void updateTrashByPath(@Param("path")String path, @Param("trashBy")String trashBy, @Param("trashTime")String trashTime);
 
     List<File> selectFilesByNameKeyword(@Param("owner")String owner, @Param("keyword")String keyword);
 
@@ -56,5 +58,13 @@ public interface FileMapper {
 
     void updateRecoveryTrashByFileId(String fileId);
 
-    void updateRecoveryTrashByPath(String path);
+    void updateRecoveryTrashByPathAndTrashBy(@Param("path")String path, @Param("trashBy")String trashBy);
+
+    File selectTrashFileByFileIdAndTrash(String fileId);
+
+    void updateIsDeleteByFileId(String fileId);
+
+    void updateIsDeleteByTrashBy(String trashBy);
+
+    BigInteger selectFileCapacityByOwner(String owner);
 }

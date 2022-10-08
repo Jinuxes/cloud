@@ -4,10 +4,9 @@ import com.jinuxes.cloud.entity.File;
 import com.jinuxes.cloud.entity.SecurityUserDetail;
 import com.jinuxes.cloud.entity.User;
 import com.jinuxes.cloud.service.api.FileService;
-import com.jinuxes.cloud.utils.DateUtil;
-import com.jinuxes.cloud.utils.FileUtils;
-import com.jinuxes.cloud.utils.ResultEntity;
-import com.jinuxes.cloud.utils.UUIDUtils;
+import com.jinuxes.cloud.utils.*;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,13 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class FileHandler {
@@ -99,7 +102,23 @@ public class FileHandler {
 
     @RequestMapping("/file/upload")
     @ResponseBody
-    public ResultEntity fileUpload(MultipartFile[] multipartFiles, String path, String parentId, HttpSession session){
+    public ResultEntity fileUpload(MultipartFile[] multipartFiles, String path, String parentId, HttpSession session, HttpServletRequest request){
+        // 获取上传文件的大小，判断是否超过用户的存储空间
+        if(request!=null && ServletFileUpload.isMultipartContent(request)) {
+            ServletRequestContext ctx = new ServletRequestContext(request);
+            BigInteger requestSize = BigInteger.valueOf(ctx.contentLength());
+            User user = getOriginalUser(session);
+            String account = user.getAccount();
+            BigInteger capacity = fileService.getFileCapacity(account);
+            if(capacity == null){
+                capacity = BigInteger.valueOf(0);
+            }
+            BigInteger sum = requestSize.add(capacity);
+            if(sum.compareTo(CloudConstant.TOTALCAPACITY) == 1){
+                return ResultEntity.failed("存储容量不足");
+            }
+        }
+
         for(MultipartFile multipartFile:multipartFiles){
             // 封装File对象，调用FileService将File对象插入数据库并在对应路径生成文件
             File fileEntity = new File();
@@ -333,6 +352,32 @@ public class FileHandler {
     public ResultEntity updateFileAndRecoveryByFileIds(@RequestParam("fileIds") List<String> fileIds, HttpSession session){
         fileService.recoveryFileByFileIds(fileIds, session);
         return ResultEntity.successWithoutData();
+    }
+
+    @RequestMapping("/file/delete/permanently")
+    @ResponseBody
+    public ResultEntity deleteFileByFileId(@RequestParam("fileIds")List<String> fileIds){
+        fileService.deleteFileByFileId(fileIds);
+        return ResultEntity.successWithoutData();
+    }
+
+    @RequestMapping("/file/capacity")
+    @ResponseBody
+    public ResultEntity getFileCapacity(HttpSession session){
+        User user = getOriginalUser(session);
+        String account = user.getAccount();
+
+        Map<String, BigInteger> capacityMsgMap = new HashMap<>();
+        BigInteger capacity = fileService.getFileCapacity(account);
+        if(capacity == null){
+            capacityMsgMap.put(CloudConstant.USEDCAPACITYKEY, BigInteger.valueOf(0));
+            capacityMsgMap.put(CloudConstant.TOTALCAPACITYKEY, CloudConstant.TOTALCAPACITY);
+            return ResultEntity.successWithData(capacityMsgMap);
+        }else{
+            capacityMsgMap.put(CloudConstant.USEDCAPACITYKEY, capacity);
+            capacityMsgMap.put(CloudConstant.TOTALCAPACITYKEY, CloudConstant.TOTALCAPACITY);
+            return ResultEntity.successWithData(capacityMsgMap);
+        }
     }
 
     // private String getServerRealPath(HttpSession session){

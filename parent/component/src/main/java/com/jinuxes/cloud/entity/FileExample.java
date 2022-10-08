@@ -834,73 +834,143 @@ public class FileExample {
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeIsNull() {
-            addCriterion("delete_time is null");
+        public Criteria andTrashByIsNull() {
+            addCriterion("trash_by is null");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeIsNotNull() {
-            addCriterion("delete_time is not null");
+        public Criteria andTrashByIsNotNull() {
+            addCriterion("trash_by is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeEqualTo(String value) {
-            addCriterion("delete_time =", value, "deleteTime");
+        public Criteria andTrashByEqualTo(String value) {
+            addCriterion("trash_by =", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeNotEqualTo(String value) {
-            addCriterion("delete_time <>", value, "deleteTime");
+        public Criteria andTrashByNotEqualTo(String value) {
+            addCriterion("trash_by <>", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeGreaterThan(String value) {
-            addCriterion("delete_time >", value, "deleteTime");
+        public Criteria andTrashByGreaterThan(String value) {
+            addCriterion("trash_by >", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeGreaterThanOrEqualTo(String value) {
-            addCriterion("delete_time >=", value, "deleteTime");
+        public Criteria andTrashByGreaterThanOrEqualTo(String value) {
+            addCriterion("trash_by >=", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeLessThan(String value) {
-            addCriterion("delete_time <", value, "deleteTime");
+        public Criteria andTrashByLessThan(String value) {
+            addCriterion("trash_by <", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeLessThanOrEqualTo(String value) {
-            addCriterion("delete_time <=", value, "deleteTime");
+        public Criteria andTrashByLessThanOrEqualTo(String value) {
+            addCriterion("trash_by <=", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeLike(String value) {
-            addCriterion("delete_time like", value, "deleteTime");
+        public Criteria andTrashByLike(String value) {
+            addCriterion("trash_by like", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeNotLike(String value) {
-            addCriterion("delete_time not like", value, "deleteTime");
+        public Criteria andTrashByNotLike(String value) {
+            addCriterion("trash_by not like", value, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeIn(List<String> values) {
-            addCriterion("delete_time in", values, "deleteTime");
+        public Criteria andTrashByIn(List<String> values) {
+            addCriterion("trash_by in", values, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeNotIn(List<String> values) {
-            addCriterion("delete_time not in", values, "deleteTime");
+        public Criteria andTrashByNotIn(List<String> values) {
+            addCriterion("trash_by not in", values, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeBetween(String value1, String value2) {
-            addCriterion("delete_time between", value1, value2, "deleteTime");
+        public Criteria andTrashByBetween(String value1, String value2) {
+            addCriterion("trash_by between", value1, value2, "trashBy");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteTimeNotBetween(String value1, String value2) {
-            addCriterion("delete_time not between", value1, value2, "deleteTime");
+        public Criteria andTrashByNotBetween(String value1, String value2) {
+            addCriterion("trash_by not between", value1, value2, "trashBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeIsNull() {
+            addCriterion("trash_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeIsNotNull() {
+            addCriterion("trash_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeEqualTo(String value) {
+            addCriterion("trash_time =", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeNotEqualTo(String value) {
+            addCriterion("trash_time <>", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeGreaterThan(String value) {
+            addCriterion("trash_time >", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("trash_time >=", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeLessThan(String value) {
+            addCriterion("trash_time <", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeLessThanOrEqualTo(String value) {
+            addCriterion("trash_time <=", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeLike(String value) {
+            addCriterion("trash_time like", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeNotLike(String value) {
+            addCriterion("trash_time not like", value, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeIn(List<String> values) {
+            addCriterion("trash_time in", values, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeNotIn(List<String> values) {
+            addCriterion("trash_time not in", values, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeBetween(String value1, String value2) {
+            addCriterion("trash_time between", value1, value2, "trashTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrashTimeNotBetween(String value1, String value2) {
+            addCriterion("trash_time not between", value1, value2, "trashTime");
             return (Criteria) this;
         }
 

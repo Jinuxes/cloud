@@ -30,15 +30,16 @@
                     <li style="height:30px;">
                         <a href="file"><i class="glyphicon glyphicon-list"></i> 全部文件</a>
                     </li>
-                    <li style="height:30px;">
-                        <a href="#"><i class="glyphicon glyphicon-file"></i> 文档</a>
-                    </li>
-                    <li style="height:30px;">
-                        <a href="#"><i class="glyphicon glyphicon-picture"></i> 图片</a>
-                    </li>
-                    <li style="height:30px;">
-                        <a href="#"><i class="glyphicon glyphicon-facetime-video"></i> 视频</a>
-                    </li>
+                    <%--下面的相当于文件名搜索--%>
+                    <%--<li style="height:30px;">--%>
+                    <%--    <a href="#"><i class="glyphicon glyphicon-file"></i> 文档</a>--%>
+                    <%--</li>--%>
+                    <%--<li style="height:30px;">--%>
+                    <%--    <a href="#"><i class="glyphicon glyphicon-picture"></i> 图片</a>--%>
+                    <%--</li>--%>
+                    <%--<li style="height:30px;">--%>
+                    <%--    <a href="#"><i class="glyphicon glyphicon-facetime-video"></i> 视频</a>--%>
+                    <%--</li>--%>
                 </ul>
             </li>
             <li class="list-group-item tree-closed">
@@ -46,4 +47,16 @@
             </li>
         </ul>
     </div>
+
+    <%--<label id="storageCapacityLabel">容量：5.6G/100G[已使用：61.25%]</label>--%>
+    <label id="storageCapacityLabel"></label>
+    <div class="progress" style="height:5px">
+        <div id="storageCapacityBar" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
 </div>
+<script type="text/javascript" src="static/js/include-sidebar.js"></script>
+<script type="text/javascript">
+    $(function(){
+        getCapacity();
+    });
+</script>

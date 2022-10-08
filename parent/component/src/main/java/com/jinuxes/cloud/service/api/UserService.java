@@ -22,4 +22,6 @@ public interface UserService {
     void deleteUsersById(List<Integer> userIdList);
 
     void updateUser(User user);
+
+    void saveRegisterUser(User user, HttpSession session);
 }

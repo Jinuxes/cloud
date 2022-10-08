@@ -344,6 +344,8 @@ function sendFile(formData){
                 $("#fileUploadModal").modal("hide");
                 // 重新刷新页面上的当前目录
                 getPathFilesByPath(window.currentPath);
+                // 调用include-sidebar.js中的getCapacity()方法，刷新容量显示
+                getCapacity();
             }
             if(code == "1"){
                 layer.msg(response.msg);
