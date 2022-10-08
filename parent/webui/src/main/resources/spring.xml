@@ -66,8 +66,6 @@
             <tx:method name="remove*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
             <tx:method name="delete*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
             <tx:method name="batch*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
-            <!-- &lt;!&ndash; recoveryFileByFileIds方法指定默认的事务传播行为。即：PROPAGATION_REQUIRED &ndash;&gt; -->
-            <!-- <tx:method name="recoveryFileByFileIds" rollback-for="java.lang.Exception"/> -->
         </tx:attributes>
     </tx:advice>
 
