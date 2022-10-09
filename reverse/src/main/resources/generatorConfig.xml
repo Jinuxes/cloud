@@ -50,6 +50,7 @@
         <!-- <table tableName="t_user" domainObjectName="User"/> -->
         <!-- <table tableName="t_role" domainObjectName="Role"/> -->
         <!-- <table tableName="t_authority" domainObjectName="Authority"/> -->
-        <table tableName="t_file" domainObjectName="File"/>
+        <!-- <table tableName="t_file" domainObjectName="File"/> -->
+        <table tableName="t_request_log" domainObjectName="RequestLog"/>
     </context>
 </generatorConfiguration>

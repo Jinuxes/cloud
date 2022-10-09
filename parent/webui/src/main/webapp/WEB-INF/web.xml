@@ -55,6 +55,34 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- 使用代码过滤器DelegatingFilterProxy来配置请求日志过滤器RequestLogFilter -->
+    <!-- 原因：
+        RequestLogFilter需要用到Mapper来将请求输入插入到数据库中，但是spring启动的时候，
+        组件启动顺序是listener->filter->servlet，所以如果直接配置RequestLogFilter而不使用代理，
+        这样Autowired注入Mapper就会是一个null。因为初始化filter的时候servlet还没启动。所以没有对应的
+        mapper的Bean对象在容器中。
+        而使用DelegatingFilterProxy，可以把filter交给spring去管理，这样只需要在spring的配置文件中
+        将RequestLogFilter作为Bean注入到容器，然后代理过滤器DelegatingFilterProxy就会在容器中获取这个过滤器
+     -->
+    <!-- 注意：这个配置不能放在security的过滤链（springSecurityFilterChain）后，否则被security过滤掉的权限不足的请求是无法记录日志的 -->
+    <filter>
+        <filter-name>requestLogFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>requestLogFilter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>requestLogFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

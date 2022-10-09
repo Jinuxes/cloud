@@ -76,4 +76,6 @@
         <!-- 将切入点表达式与事务通知关联起来 -->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
+
+    <bean id="requestLogFilter" class="com.jinuxes.cloud.mvc.filter.RequestLogFilter"></bean>
 </beans>

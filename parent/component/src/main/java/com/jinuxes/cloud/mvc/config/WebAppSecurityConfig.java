@@ -1,5 +1,6 @@
 package com.jinuxes.cloud.mvc.config;
 
+import com.google.gson.Gson;
 import com.jinuxes.cloud.mvc.handler.CustomAccessDeniedHandler;
 import com.jinuxes.cloud.service.Impl.SecurityUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**

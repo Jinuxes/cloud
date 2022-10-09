@@ -26,8 +26,9 @@
         </property>
     </bean>
 
-    <!-- 配置文件上传拦截器，这个拦截器用来判断文件的大小是否超过限制 -->
+
     <mvc:interceptors>
+        <!-- 配置文件上传拦截器，这个拦截器用来判断文件的大小是否超过限制 -->
         <mvc:interceptor>
             <mvc:mapping path="/**" />
             <bean class="com.jinuxes.cloud.mvc.interceptor.FileUploadInterceptor">
