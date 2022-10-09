@@ -10,6 +10,7 @@ import com.jinuxes.cloud.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -119,6 +120,44 @@ public class UserHandler {
             String currentDateTime = DateUtil.getCurrentDateTime();
             user.setCreateTime(currentDateTime);
             userService.saveRegisterUser(user, session);
+            return ResultEntity.successWithoutData();
+        }
+    }
+
+    @RequestMapping("/personal/info")
+    @ResponseBody
+    public ResultEntity<User> getPersonalInfoByAccount(HttpSession session){
+        String account = ((SecurityUserDetail)((SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal()).getOriginalUser().getAccount();
+        User user = userService.getUserByAccount(account);
+        return ResultEntity.successWithData(user);
+    }
+
+    @RequestMapping("/personal/info/update")
+    @ResponseBody
+    public ResultEntity<String> updatePersonalInformation(@Validated(ValidatorGroups.UpdateUser.class) User user, BindingResult bindingResult, HttpSession session){
+        if(bindingResult.hasErrors()){
+            FieldError filedError = bindingResult.getFieldErrors().get(0);
+            return ResultEntity.failed(filedError.getDefaultMessage());
+        }else{
+            // 在session中获取账号
+            String account = ((SecurityUserDetail)((SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal()).getOriginalUser().getAccount();
+            user.setAccount(account);
+            userService.updateUser(user);
+            return ResultEntity.successWithoutData();
+        }
+    }
+
+    @RequestMapping("/personal/password/update")
+    @ResponseBody
+    public ResultEntity<String> updatePersonalPassword(@Validated(ValidatorGroups.UpdateUserPassword.class) User user, BindingResult bindingResult, HttpSession session){
+        if(bindingResult.hasErrors()){
+            FieldError filedError = bindingResult.getFieldErrors().get(0);
+            return ResultEntity.failed(filedError.getDefaultMessage());
+        }else{
+            // 在session中获取账号
+            String account = ((SecurityUserDetail)((SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal()).getOriginalUser().getAccount();
+            user.setAccount(account);
+            userService.updatePersonalPassword(user);
             return ResultEntity.successWithoutData();
         }
     }

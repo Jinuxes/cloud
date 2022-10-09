@@ -15,7 +15,7 @@ public class User {
     private String account;
 
     @Pattern(regexp="^\\w{6,18}$",
-            groups={ValidatorGroups.AddUser.class},
+            groups={ValidatorGroups.AddUser.class,ValidatorGroups.UpdateUserPassword.class},
             message=CloudConstant.PASSWORDERROR)
     private String password;
 

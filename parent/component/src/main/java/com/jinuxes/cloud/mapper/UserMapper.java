@@ -35,4 +35,6 @@ public interface UserMapper {
     void deleteByUsersId(@Param("userIdList") List<Integer> userIdList);
 
     void updateByUserAccount(User user);
+
+    void updatePersonPasswordByAccount(User user);
 }

@@ -32,7 +32,7 @@
             <input name="password" type="password"/>
         </div>
         <div class="btn-box">
-            <a href="#">忘记密码?</a>
+            <%--<a href="#">忘记密码?</a>--%>
             <div>
                 <button type="submit">登录</button>
                 <button id="registerBtn" type="button" onclick="window.location.href='register'">注册</button>

@@ -24,4 +24,6 @@ public interface UserService {
     void updateUser(User user);
 
     void saveRegisterUser(User user, HttpSession session);
+
+    void updatePersonalPassword(User user);
 }

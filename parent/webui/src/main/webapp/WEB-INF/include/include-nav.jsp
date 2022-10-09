@@ -19,8 +19,8 @@
                             <i class="glyphicon glyphicon-user"></i> ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
-                            <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
+                            <li><a id="personalInformationBtn" href="javascript:void(0)"><i class="glyphicon glyphicon-cog"></i> 个人信息</a></li>
+                            <li><a id="updatePasswordBtn" href="javascript:void(0)"><i class="glyphicon glyphicon-lock"></i> 修改密码</a></li>
                             <li class="divider"></li>
                             <li><a href="logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
                         </ul>
@@ -30,3 +30,14 @@
         </div>
     </div>
 </nav>
+<%@include file="/WEB-INF/modal/include-nav-personal-info-modal.jsp"%>
+<%@include file="/WEB-INF/modal/include-nav-personal-password-modal.jsp"%>
+<script type="text/javascript" src="static/js/include-nav.js"></script>
+<script type="text/javascript">
+    $(function(){
+        personalInformation();
+        savePersonalInformation();
+        updatePassword();
+        saveUpdatePassword();
+    });
+</script>

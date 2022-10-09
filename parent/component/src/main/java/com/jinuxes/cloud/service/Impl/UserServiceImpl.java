@@ -144,6 +144,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void updatePersonalPassword(User user) {
+        // 对密码进行加密，使用的是BCryptPasswordEncoder
+        String password = user.getPassword();
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        userMapper.updatePersonPasswordByAccount(user);
+    }
+
     private String getCurrentUserHomePath(HttpSession session, String account){
         ServletContext servletContext = session.getServletContext();
         String realPath = servletContext.getRealPath(java.io.File.separator);

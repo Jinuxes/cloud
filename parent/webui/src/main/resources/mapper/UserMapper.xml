@@ -256,4 +256,10 @@
       email = #{email}
     where account = #{account}
   </update>
+
+  <update id="updatePersonPasswordByAccount" parameterType="com.jinuxes.cloud.entity.User">
+    update t_user
+    set password = #{password}
+    where account = #{account}
+  </update>
 </mapper>
