@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+    String backgroundUrl = basePath + "static/image/bg.jpg";
 %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -17,7 +18,6 @@
     <title>用户注册</title>
     <link rel="stylesheet" href="static/css/registerStyle.css">
     <script src="static/jquery/jquery-2.1.1.min.js"></script>
-    <%--<script src="static/bootstrap/js/bootstrap.min.js"></script>--%>
     <script src="static/layer/layer.js"></script>
     <script type="text/javascript" src="static/js/register.js"></script>
     <script type="text/javascript">
@@ -26,7 +26,7 @@
         });
     </script>
 </head>
-<body>
+<body style="background: url(<%=backgroundUrl%>) no-repeat">
 
 <form action="register" method="post">
     <div class="box">

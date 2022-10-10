@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+    String backgroundUrl = basePath + "static/image/bg.jpg";
 %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -17,7 +18,7 @@
     <title>登录</title>
     <link rel="stylesheet" href="static/css/style.css">
 </head>
-<body>
+<body style='background: url(<%=backgroundUrl%>) no-repeat'>
 
 <form action="login" method="post">
     <div class="box">
