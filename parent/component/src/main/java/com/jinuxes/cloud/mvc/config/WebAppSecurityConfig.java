@@ -95,6 +95,8 @@ public class WebAppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/assign/role/info","/assign/role/save")
                 .access("hasAuthority('user:assign')")
+                .antMatchers("/assign/authority/info","/assign/authority/save")
+                .access("hasAuthority('role:assign')")
                 .antMatchers("/user/delete")
                 .access("hasAuthority('user:delete')")
                 .antMatchers("/user/**")
@@ -102,7 +104,7 @@ public class WebAppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/role/**","/authority/**")
                 .hasRole("超级管理员")
                 .anyRequest()
-                .authenticated()
+                .authenticated() // 其他所有请求，需要认证
                 // .permitAll()  // 其它所有请求允许访问，方便测试，后面再改
                 .and()
                 .csrf()  // 禁用跨站请求伪造功能

@@ -69,7 +69,6 @@ public class FileHandler {
         //    注意：t_file表的path字段实质含义是代表“文件或目录”所属的路径，也就path字段的某行是不包含“该文件名或目录名的”，仅仅是该文件所属的目录路径
         String homePath = "\\"+account + path;  // 前端传过来的路径是”\xxx\xxx“的，前面拼接上个人的家目录就是完整的相对于文件根目录的目录
         List<File> fileList = fileService.getFilesByPath(homePath);
-        // System.out.println(fileList);
         return ResultEntity.successWithData(fileList);
     }
 
@@ -379,12 +378,6 @@ public class FileHandler {
             return ResultEntity.successWithData(capacityMsgMap);
         }
     }
-
-    // private String getServerRealPath(HttpSession session){
-    //     ServletContext servletContext = session.getServletContext();
-    //     String realPath = servletContext.getRealPath(java.io.File.separator);
-    //     return realPath;
-    // }
 
     private User getOriginalUser(HttpSession session){
         SecurityContext securityContext = (SecurityContext)session.getAttribute("SPRING_SECURITY_CONTEXT");

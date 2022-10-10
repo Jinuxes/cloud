@@ -418,34 +418,6 @@ function filesDownloadButtonClick(){
 
         // 调用函数，发送下载请求
         sendDownloadRequest(paths);
-        // // 先发送请求查询服务器中文件是否存在，存在的情况下用表单的方式发送下载请求。
-        // $.ajax({
-        //     "url":"file/checked",
-        //     "type":"post",
-        //     "traditional":true,
-        //     "data":{
-        //         "paths":paths,
-        //     },
-        //     "dataType":"json",
-        //     "success":function(response){
-        //         var code = response.code;
-        //         if(code == "0"){
-        //             // 动态生成form，发送下载请求
-        //             var form = $('<form id="downFileForm" method="POST" action="file/download" target="_blank">');  // 创建新页面下载，然后自动关闭新页面
-        //             // var form = $('<form method="POST" action="file/download">');  // 不创建新页面进行下载
-        //             form.append($('<input type="hidden" name="paths" value="'+ paths +'">'));
-        //             $('body').append(form);
-        //             form.submit();
-        //             $("#downFileForm").remove();  // 移除下载临时用的表单
-        //         }
-        //         if(code == "1"){
-        //             layer.msg(response.msg);
-        //         }
-        //     },
-        //     "error":function(error){
-        //         layer.msg(error.status+" "+error.statusText);
-        //     }
-        // })
     })
 }
 

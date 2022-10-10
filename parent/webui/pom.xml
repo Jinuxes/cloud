@@ -42,9 +42,16 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- log4j日志 -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
+        </dependency>
+
+        <!-- spring security标签库 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
         </dependency>
     </dependencies>
 

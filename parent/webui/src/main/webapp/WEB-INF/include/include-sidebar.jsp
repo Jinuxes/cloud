@@ -6,26 +6,33 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <div class="col-sm-3 col-md-2 sidebar">
     <div class="tree">
         <ul style="padding-left:0px;" class="list-group">
             <%--<li class="list-group-item tree-closed">--%>
+            <security:authorize access="hasRole('超级管理员') or hasRole('管理员')">
+                <li class="list-group-item">
+                    <%--<span><i class="glyphicon glyphicon-triangle-right"></i> 用户管理 <span class="badge" style="float:right">3</span></span>--%>
+                    <span><i class="glyphicon glyphicon-triangle-right"></i> 用户管理 </span>
+                    <ul style="margin-top:10px;display:block;">
+                        <li style="height:30px;">
+                            <a href="user"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
+                        </li>
+                        <security:authorize access="hasRole('超级管理员')">
+                            <li style="height:30px;">
+                                <a href="role"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="authority"><i class="glyphicon glyphicon-th-list"></i> 权限维护</a>
+                            </li>
+                        </security:authorize>
+                    </ul>
+                </li>
+            </security:authorize>
             <li class="list-group-item">
-                <span><i class="glyphicon glyphicon-triangle-right"></i> 用户管理 <span class="badge" style="float:right">3</span></span>
-                <ul style="margin-top:10px;display:block;">
-                    <li style="height:30px;">
-                        <a href="user"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
-                    </li>
-                    <li style="height:30px;">
-                        <a href="role"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
-                    </li>
-                    <li style="height:30px;">
-                        <a href="authority"><i class="glyphicon glyphicon-th-list"></i> 权限维护</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="list-group-item">
-                <span><i class="glyphicon glyphicon-triangle-right"></i> 我的文件 <span class="badge" style="float:right">4</span></span>
+                <%--<span><i class="glyphicon glyphicon-triangle-right"></i> 我的文件 <span class="badge" style="float:right">1</span></span>--%>
+                <span><i class="glyphicon glyphicon-triangle-right"></i> 我的文件 </span>
                 <ul style="margin-top:10px;display:block;">
                     <li style="height:30px;">
                         <a href="file"><i class="glyphicon glyphicon-list"></i> 全部文件</a>

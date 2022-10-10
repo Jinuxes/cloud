@@ -1,26 +1,18 @@
 package com.jinuxes.cloud.mvc.handler;
 
 import com.github.pagehelper.PageInfo;
-import com.jinuxes.cloud.entity.File;
 import com.jinuxes.cloud.entity.SecurityUserDetail;
 import com.jinuxes.cloud.entity.User;
-import com.jinuxes.cloud.service.api.FileService;
 import com.jinuxes.cloud.service.api.UserService;
 import com.jinuxes.cloud.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -162,21 +154,4 @@ public class UserHandler {
         }
     }
 
-    // private String getPersonHomePath(HttpSession httpSession, String account){
-    //     ServletContext servletContext = httpSession.getServletContext();
-    //     String realPath = servletContext.getRealPath(File.separator);
-    //     String filesRootPath = realPath+"\\"+"files";
-    //
-    //     // 获取用户账号名，作为用户的根目录（家目录）名
-    //     // SecurityContext securityContext = (SecurityContext)httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
-    //     // Authentication authentication = securityContext.getAuthentication();
-    //     // SecurityUserDetail securityUserDetail = (SecurityUserDetail) authentication.getPrincipal();
-    //     // User originalUser = securityUserDetail.getOriginalUser();
-    //     // System.out.println(originalUser);
-    //
-    //
-    //     String personHomePath = filesRootPath + "\\" + account;
-    //     System.out.println(personHomePath);
-    //     return personHomePath;
-    // }
 }

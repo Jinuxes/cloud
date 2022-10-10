@@ -4,7 +4,6 @@ import com.jinuxes.cloud.entity.Authority;
 import com.jinuxes.cloud.entity.Role;
 import com.jinuxes.cloud.service.api.AuthorityService;
 import com.jinuxes.cloud.service.api.RoleService;
-import com.jinuxes.cloud.service.api.UserService;
 import com.jinuxes.cloud.utils.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +17,6 @@ import java.util.Map;
 
 @Controller
 public class AssignHandler {
-
-    // @Autowired
-    // UserService userService;
 
     @Autowired
     RoleService roleService;

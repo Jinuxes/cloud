@@ -59,9 +59,6 @@ public class AuthorityHandler {
     @RequestMapping("/authority/delete")
     @ResponseBody
     public ResultEntity<String> deleteAuthoritysById(Integer[] authorityIds){
-        for(int i:authorityIds){
-            System.out.println(i);
-        }
         List<Integer> authorityIdList = Arrays.asList(authorityIds);
         authorityService.deleteAuthoritysById(authorityIdList);
         return ResultEntity.successWithoutData();

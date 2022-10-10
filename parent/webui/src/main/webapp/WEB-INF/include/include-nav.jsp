@@ -9,7 +9,7 @@
 <nav class="navbar navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:25px;" href="#"><i class="glyphicon glyphicon-cloud"></i>  家庭云</a></div>
+            <div><a class="navbar-brand" style="font-size:25px;" href="javascript:0;"><i class="glyphicon glyphicon-cloud"></i>  云存储</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">

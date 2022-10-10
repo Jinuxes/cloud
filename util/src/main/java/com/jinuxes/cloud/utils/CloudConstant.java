@@ -43,6 +43,6 @@ public class CloudConstant {
     // 存储容量相关
     public static final String USEDCAPACITYKEY = "usedCapacity"; // 已经使用的容量键值
     public static final String TOTALCAPACITYKEY = "totalCapacity"; // 总容量键值
-    // public static final BigInteger TOTALCAPACITY = new BigInteger("107374182400");  // 单个用户存储容量上限：100G
-    public static final BigInteger TOTALCAPACITY = new BigInteger("4294967296");  // 单个用户存储容量上限：4G
+    public static final BigInteger TOTALCAPACITY = new BigInteger("107374182400");  // 单个用户存储容量上限：100G
+    // public static final BigInteger TOTALCAPACITY = new BigInteger("4294967296");  // 单个用户存储容量上限：4G
 }
